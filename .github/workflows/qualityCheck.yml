@@ -7,7 +7,7 @@ on:
     types: [assigned, opened, synchronize, reopened]
 
 jobs:
-  build:
+  gradle:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -19,3 +19,5 @@ jobs:
       run: chmod +x gradlew
     - name: Execute sonarqube task
       run: ./gradlew sonarqube -Dsonar.branch.name=$GITHUB_REF -Dsonar.gitlab.max_major_issues_gate=0 -Dsonar.qualitygate.wait=true
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
