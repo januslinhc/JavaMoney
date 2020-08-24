@@ -4,18 +4,23 @@ on:
   push:
     branches: [ develop ]
   pull_request:
-    types: [assigned, opened, synchronize, reopened]
+    types: [opened, synchronize, reopened]
 
 jobs:
-  build:
+  sonarcloud:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+      with:
+        fetch-depth: 0
     - name: Set up JDK 1.11
       uses: actions/setup-java@v1
       with:
         java-version: 1.11
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Execute sonarqube task
+    - name: SonarCloud Scan
       run: ./gradlew sonarqube -Dsonar.branch.name=$GITHUB_REF -Dsonar.gitlab.max_major_issues_gate=0 -Dsonar.qualitygate.wait=true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
