@@ -1,0 +1,33 @@
+plugins {
+    id 'java'
+    id "org.sonarqube" version "3.0"
+    id 'jacoco'
+}
+
+group 'org.janus'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled true
+    }
+}
+
+test.finalizedBy jacocoTestReport
+
+sonarqube {
+    properties {
+        property "sonar.projectKey", "januslinhc_JavaMoney"
+        property "sonar.organization", "januslinhc-github"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
+}
+tasks['sonarqube'].dependsOn test
