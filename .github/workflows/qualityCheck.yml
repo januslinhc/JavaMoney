@@ -19,10 +19,8 @@ jobs:
         java-version: 1.11
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-    - name: Execute sonarqube task
-      run: ./gradlew test
     - name: SonarCloud Scan
-      uses: sonarsource/sonarcloud-github-action@master
+      run: ./gradlew sonarqube -Dsonar.branch.name=$GITHUB_REF -Dsonar.gitlab.max_major_issues_gate=0 -Dsonar.qualitygate.wait=true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
