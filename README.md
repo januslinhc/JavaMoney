@@ -1,7 +1,5 @@
 # Java Money
-[![Contributors][contributors-shield]][contributors-url]
-[![Issues][issues-shield]][issues-url]
-[![MIT License][license-shield]][license-url]
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/januslinhc/JavaMoney)
 
 ## Demo
 ```java
