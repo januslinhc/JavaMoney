@@ -19,7 +19,7 @@ class ExchangeRateAPIRateTableTests {
     ObjectMapper mapper = new ObjectMapper();
 
     @Test
-    public void shouldAbleToGetRate() throws IOException {
+    void shouldAbleToGetRate() throws IOException {
         Request request = new Request.Builder()
                 .url(String.format("https://api.exchangeratesapi.io/latest?symbols=%s,%s", CurrencyEnum.HKD, CurrencyEnum.USD))
                 .build();
@@ -28,6 +28,14 @@ class ExchangeRateAPIRateTableTests {
 
         BigDecimal expected = BigDecimal.ONE.divide(rate.getRate(CurrencyEnum.HKD), 8, RoundingMode.HALF_UP).multiply(rate.getRate(CurrencyEnum.USD));
         BigDecimal actual = rateTable.getRate(CurrencyEnum.HKD, CurrencyEnum.USD);
+
+        Assert.assertEquals(expected, actual);
+    }
+
+    @Test
+    void shouldAbleToGetRate2() throws IOException {
+        BigDecimal expected = BigDecimal.ONE;
+        BigDecimal actual = rateTable.getRate(CurrencyEnum.HKD, CurrencyEnum.HKD);
 
         Assert.assertEquals(expected, actual);
     }

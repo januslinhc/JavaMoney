@@ -14,6 +14,9 @@ public interface IMoney {
     BigDecimal getValue(@NotNull CurrencyEnum rateEnum) throws IOException;
 
     @NotNull
+    CurrencyEnum getBase();
+
+    @NotNull
     BigDecimal add(@NotNull BigDecimal amount);
 
     @NotNull
