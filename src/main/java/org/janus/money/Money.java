@@ -17,6 +17,18 @@ public class Money implements IMoney {
         this.rateTable = rateTable;
     }
 
+    @Override
+    public boolean equals(final Object obj) {
+        if (!(obj instanceof Money)) {
+            return false;
+        }
+        final Money target = (Money) obj;
+        if (this.amount.equals(BigDecimal.ZERO) && this.amount.equals(target.amount)) {
+            return true;
+        }
+        return this.amount.equals(target.amount) && this.base.equals(target.base);
+    }
+
     Money(@NotNull final CurrencyEnum base, @NotNull final IRateTable rateTable, @NotNull final BigDecimal amount) {
         this.base = base;
         this.amount = amount;
@@ -36,6 +48,12 @@ public class Money implements IMoney {
             return getValue();
         }
         return this.amount.multiply(this.rateTable.getRate(base, rateEnum));
+    }
+
+    @NotNull
+    @Override
+    public CurrencyEnum getBase() {
+        return this.base;
     }
 
     @NotNull
