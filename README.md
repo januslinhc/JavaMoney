@@ -6,7 +6,7 @@
 ## Demo
 ```java
 class Demo {
-    public static void main(String[] args){
+    public static void main(String[] args) throws IOException {
       IRateTable rateTable = new ExchangeRateAPIRateTable();
       IMoneyFactory hkdFactory = new MoneyFactory(rateTable, CurrencyEnum.HKD);
       IMoneyFactory usdFactory = new MoneyFactory(rateTable, CurrencyEnum.USD);
