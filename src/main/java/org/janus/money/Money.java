@@ -5,6 +5,7 @@ import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Objects;
 
 public class Money implements IMoney {
     private final CurrencyEnum base;
@@ -27,6 +28,11 @@ public class Money implements IMoney {
             return true;
         }
         return this.amount.equals(target.amount) && this.base.equals(target.base);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(base, amount);
     }
 
     Money(@NotNull final CurrencyEnum base, @NotNull final IRateTable rateTable, @NotNull final BigDecimal amount) {

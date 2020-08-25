@@ -9,13 +9,43 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 class MoneyTests {
-    IRateTable rateTable = new IRateTable() {
-        @NotNull
-        @Override
-        public BigDecimal getRate(@NotNull CurrencyEnum from, @NotNull CurrencyEnum to) throws IOException {
-            return BigDecimal.TEN;
-        }
-    };
+    IRateTable rateTable = (from, to) -> BigDecimal.TEN;
+
+    @Test
+    void moneyEqual() {
+        boolean expected = true;
+        IMoney money = new Money(CurrencyEnum.HKD, rateTable, BigDecimal.ZERO);
+        IMoney money2 = new Money(CurrencyEnum.USD, rateTable, BigDecimal.ZERO);
+        boolean actual = money.equals(money2);
+        Assert.assertEquals(expected, actual);
+        long moneyHash = money.hashCode();
+        long money2Hash = money2.hashCode();
+        Assert.assertNotEquals(moneyHash, money2Hash);
+    }
+
+    @Test
+    void moneyEqual2() {
+        boolean expected = false;
+        IMoney money = new Money(CurrencyEnum.HKD, rateTable, BigDecimal.ONE);
+        IMoney money2 = new Money(CurrencyEnum.USD, rateTable, BigDecimal.ONE);
+        boolean actual = money.equals(money2);
+        Assert.assertEquals(expected, actual);
+        long moneyHash = money.hashCode();
+        long money2Hash = money2.hashCode();
+        Assert.assertNotEquals(moneyHash, money2Hash);
+    }
+
+    @Test
+    void moneyEqual3() {
+        boolean expected = true;
+        IMoney money = new Money(CurrencyEnum.HKD, rateTable, BigDecimal.ONE);
+        IMoney money2 = new Money(CurrencyEnum.HKD, rateTable, BigDecimal.ONE);
+        boolean actual = money.equals(money2);
+        Assert.assertEquals(expected, actual);
+        long moneyHash = money.hashCode();
+        long money2Hash = money2.hashCode();
+        Assert.assertEquals(moneyHash, money2Hash);
+    }
 
     @Test
     void shouldAbleToGetBase() {
@@ -58,7 +88,7 @@ class MoneyTests {
     }
 
     @Test
-    void shouldAbleToAddBigDecimal() throws IOException {
+    void shouldAbleToAddBigDecimal() {
         BigDecimal expected = BigDecimal.valueOf(2);
         IMoney money = new Money(CurrencyEnum.HKD, rateTable, BigDecimal.ONE);
         BigDecimal actual = money.add(BigDecimal.ONE);
@@ -84,7 +114,7 @@ class MoneyTests {
     }
 
     @Test
-    void shouldAbleToMultiplyBigDecimal() throws IOException {
+    void shouldAbleToMultiplyBigDecimal() {
         BigDecimal expected = BigDecimal.valueOf(2);
         IMoney money = new Money(CurrencyEnum.HKD, rateTable, BigDecimal.ONE);
         BigDecimal actual = money.multiply(BigDecimal.valueOf(2));
@@ -110,7 +140,7 @@ class MoneyTests {
     }
 
     @Test
-    void shouldAbleToDivideBigDecimal() throws IOException {
+    void shouldAbleToDivideBigDecimal() {
         BigDecimal expected = BigDecimal.valueOf(5.0000);
         IMoney money = new Money(CurrencyEnum.HKD, rateTable, BigDecimal.TEN);
         BigDecimal actual = money.divide(BigDecimal.valueOf(2), 4, RoundingMode.HALF_UP);
