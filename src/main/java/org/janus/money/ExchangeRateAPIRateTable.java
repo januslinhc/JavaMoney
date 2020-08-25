@@ -19,6 +19,9 @@ public class ExchangeRateAPIRateTable implements IRateTable {
     @NotNull
     @Override
     public BigDecimal getRate(@NotNull final CurrencyEnum from, @NotNull final CurrencyEnum to) throws IOException {
+        if (from.equals(to)) {
+            return BigDecimal.ONE;
+        }
         Request request = new Request.Builder()
                 .url(String.format("https://api.exchangeratesapi.io/latest?symbols=%s,%s", from.getValue(), to.getValue()))
                 .build();
