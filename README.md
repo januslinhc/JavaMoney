@@ -1,5 +1,5 @@
 # Java Money
-[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/januslinhc/JavaMoney)
+[![MIT License](https://img.shields.io/apm/l/atomic-design-ui.svg?)](https://github.com/januslinhc/JavaMoney) ![](https://github.com/januslinhc/JavaMoney/workflows/quality%20check/badge.svg)
 
 ## Demo
 ```java
